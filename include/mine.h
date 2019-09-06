@@ -11,7 +11,7 @@ class MineField
 	char gameBoard[N][M];
 	char _printBoard[N][M];
 	char flagBoard[N][M];
-	bool virado[N][M];
+	bool flapped[N][M];
 	bool isOver = false;
 	bool isKaboom = false;
 	std::map<std::string, bool> visitedMap;

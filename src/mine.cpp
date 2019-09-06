@@ -43,7 +43,7 @@ void MineField::initGame(int mines)
 			gameBoard[i][j] = '#';
 			_printBoard[i][j] = '#';
 			flagBoard[i][j] = '#';
-			virado[i][j] = false;
+			flapped[i][j] = false;
 		}
 
 	initGameBoard(mines);
@@ -115,8 +115,8 @@ void MineField::numbersBoard(void)
 
 void MineField::turnPos(int i, int j)
 {
-	if (!virado[i][j]) {
-		virado[i][j] = true;
+	if (!flapped[i][j]) {
+		flapped[i][j] = true;
 		_printBoard[i][j] = gameBoard[i][j];
 	}
 
