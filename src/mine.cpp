@@ -128,63 +128,64 @@ void MineField::zeroTurn(int iI, int iJ)
 	string sJ = to_string(iJ);
 	string key = sI + sJ;
 
-	; // vira - sempre q zero ja vira
+	// flap it always if zero
+	turnPos(iI, iJ);
 	if (visitedMap.find(key) == visitedMap.end()) {
 		visitedMap.insert( std::pair<string,bool>(key, true));
 
 		// behind
 		if((iJ - 1) >= 0) {
 			if (gameBoard[iI][iJ-1] != '0')
-				;// vira
+				turnPos(iI, iJ-1);
 			else
-				zeroTurn(iI, iJ-1);
+				zeroTurn(iI, iJ - 1);
 		}
 		// front
 		if ((iJ + 1) < M) {
 			if (gameBoard[iI][iJ+1] != '0')
-			 ;// vira
+				turnPos(iI, iJ + 1);
 			else
 				zeroTurn(iI, iJ + 1);
 		}
 		// up
 		if ((iI - 1) >= 0) {
 		       if (gameBoard[iI-1][iJ] != '0')
-				; // vira
+				turnPos(iI - 1, iJ);
 		       else
-			       zeroTurn(iI - 1, iJ);
+			       	zeroTurn(iI - 1, iJ);
 		}
 		// up behiInd
 		if (((iI - 1) >= 0 && ((iJ - 1) >= 0))) {
 			if (gameBoard[iI-1][iJ-1] !=  '0')
-				; // vira
+				turnPos(iI - 1, iJ - 1);
 			else
 				zeroTurn(iI - 1, iJ - 1);
 		}
 		// up front
 		if ((iI - 1) >= 0 && ((iJ+1) < M)) {
 			if (gameBoard[iI-1][iJ+1] != '0')
-				; // vira
+				turnPos(iI - 1, iJ + 1);
 			else
 				zeroTurn(iI - 1, iJ + 1);
 		}
 		// down
 		if ((iI + 1) < N) {
 			if (gameBoard[iI+1][iJ] != '0')
-				; // vira
+				turnPos(iI + 1, iJ);
 			else
 				zeroTurn(iI + 1, iJ);
 		}
 		// down behiInd
 		if ((iI + 1 < N) && (iJ - 1 >= 0)) {
 			if (gameBoard[iI+1][iJ-1] != '0')
-				; // vira
+				turnPos(iI + 1, iJ - 1);
 			else
 				zeroTurn(iI + 1, iJ - 1);
 		}
 		// down front
 		if (((iI + 1) < N) && (iJ + 1) < M) {
 			if (gameBoard[iI+1][iJ+1] != '0')
-				; //vira
+				turnPos(iI + 1, iJ + 1);
 			else
 				zeroTurn(iI + 1, iJ + 1);
 		}
