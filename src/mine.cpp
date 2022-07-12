@@ -17,6 +17,9 @@ bool MineField::checkPositionGameBoard(int pos1, int pos2)
 	if (gameBoard[pos1][pos2] == '#');
 }
 
+/** Set the mines in the gameBoard
+ * @mines: number of mines
+ * **/
 void MineField::initGameBoard(int mines)
 {
 	srand( time(nullptr) );
@@ -43,7 +46,7 @@ void MineField::initGame(int mines)
 			gameBoard[i][j] = '#';
 			_printBoard[i][j] = '#';
 			flagBoard[i][j] = '#';
-			flapped[i][j] = false;
+			picked[i][j] = false;
 		}
 
 	initGameBoard(mines);
@@ -54,6 +57,14 @@ void MineField::printBoard(void)
 {
 	int i;
 	int j;
+
+	for (i=0; i < N; i ++) {
+		for (j=0; j < M; j++) {
+			cout << gameBoard[i][j];
+		}
+		cout << "\n";
+		j = 0;
+	}
 
 	for (i=0; i < N; i ++) {
 		for (j=0; j < M; j++) {
@@ -113,22 +124,29 @@ void MineField::numbersBoard(void)
 	}
 }
 
+/** turn a position when it is picked
+ *
+ **/
 void MineField::turnPos(int i, int j)
 {
-	if (!flapped[i][j]) {
-		flapped[i][j] = true;
+	if (!picked[i][j]) {
+		picked[i][j] = true;
 		_printBoard[i][j] = gameBoard[i][j];
 	}
 
 }
 
+/** Turn all zero nearby
+ * @iI index of the column
+ * @iJ index of the line
+ **/
 void MineField::zeroTurn(int iI, int iJ)
 {
 	string sI = to_string(iI);
 	string sJ = to_string(iJ);
 	string key = sI + sJ;
 
-	// flap it always if zero
+	// turn it always when zero
 	turnPos(iI, iJ);
 	if (visitedMap.find(key) == visitedMap.end()) {
 		visitedMap.insert( std::pair<string,bool>(key, true));
@@ -194,5 +212,21 @@ void MineField::zeroTurn(int iI, int iJ)
 
 void MineField::menuGame(void)
 {
-;
+	int Y;
+	int X;
+	char quit;
+
+	cout << "========== MineField ==========" << endl;
+	cout << endl;
+	cout << "Exit ? [y/n]" << endl;
+	cin >> quit;
+	cout << "Pick a position in the MineField " << N << " x " << M << endl;
+	cout << "Pick X coord (0 - 49): ";
+	cin >> X;
+	cout << "Pick Y coord (0 - 49): ";
+	cin >> Y;
+
+	if (gameBoard[X][Y] == '0') zeroTurn(X,Y);
+	else turnPos(X, Y);
+	printBoard();
 }

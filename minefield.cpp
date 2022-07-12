@@ -5,7 +5,8 @@ int main(void) {
 
 
 	m.initGame(MINES);
-	m.printBoard();
+	m.menuGame();
+	//m.printBoard();
 
 	return 0;
 }
